@@ -10,7 +10,7 @@ let archive = archiver('zip', {
 })
 
 output.on('close', function() {
-  console.log(archive.pointer() + '/13000 total bytes');
+  console.log(archive.pointer() + '/13312 total bytes');
 });
 
 archive.on('warning', function(err) {
