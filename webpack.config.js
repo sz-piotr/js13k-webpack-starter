@@ -1,63 +1,42 @@
-const path = require('path')
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const isProduction = process.env.npm_lifecycle_event === 'build'
 
-let htmlConfig = {
-  filename: 'index.html',
-  template: 'src/index.html'
-};
-
-if(isProduction) {
-  htmlConfig.inlineSource = '.(js|css)$'
-}
-
-let config = {
-  entry: './src/index.js',
-  output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'script.js'
-  },
+module.exports = {
+  entry: './src',
+  devtool: !isProduction && 'source-map',
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['env', { "modules": false }]
-          ]
-        }
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          }
+        ]
       }
-    }, {
-      test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader'
-      })
-    }]
+    ]
   },
   plugins: [
-    new ExtractTextPlugin('style.css'),
-    new HtmlWebpackPlugin(htmlConfig),
-    new HtmlWebpackInlineSourcePlugin()
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      minify: isProduction && {
+        collapseWhitespace: true
+      },
+      inlineSource: isProduction && '\.(js|css)$'
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
+    new OptimizeCssAssetsPlugin({}),
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
   ],
-  stats: 'minimal',
   devServer: {
-    stats: 'minimal'
+    stats: 'minimal',
+    overlay: true
   }
 }
-
-if(!isProduction) {
-  config.devtool = 'eval-source-map'
-} else {
-  config.plugins = config.plugins.concat([
-    new webpack.optimize.ModuleConcatenationPlugin()
-  ])
-}
-
-module.exports = config
