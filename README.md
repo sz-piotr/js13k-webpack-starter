@@ -7,11 +7,11 @@ This project aims to be a foundation for creating a game for the [js13k](http://
 ## List of features
 
 1. JS & CSS minification
-2. Code inlining (the entire application is a single `index.html` file)
-3. Development server with source maps
-4. Generation of submission files (including the `.zip` file)
-5. *ES2015* support using [Babel](https://babeljs.io/)
-5. Tree shaking and module concatenation
+1. Code inlining (the entire application is a single `index.html` file)
+1. Development server with source maps
+1. Generation of submission files (including the `.zip` file)
+1. *ES2015* module support through webpack
+1. Tree shaking and module concatenation
 
 ## How can I get started?
 
@@ -56,9 +56,10 @@ All your javascript files should be located in the `src/app/` directory. The ent
 
 This project uses webpack for module bundling. This means that all the files that you want to use should be imported directly or indirectly by either `main.js` or `main.css`.
 
-Also note the *ES2015* features including the module syntax. If you are new to modern javascript you can find more information about the new standards [here](https://babeljs.io/learn-es2015/).
+## ES2015+ support
+
+This repository used to include [Babel](https://babeljs.io/) to enable working with modern JavaScript. As time progresses however the browser support for modern JS became excelent and webpack began shipping a newer version of uglify that can minify it. All of this makes it a rational choice to omit Babel as it would only increase the overall bundle size.
 
 ## Resources
 
 1. Webpack [https://webpack.js.org/](https://webpack.js.org/)
-2. Babel [https://babeljs.io/](https://babeljs.io/)
