@@ -1,34 +1,48 @@
 import {
     heroMovement1,
     heroMovement2,
+    heroMovement3,
+    heroMovement4,
     heroStatic1,
     heroStatic2
 } from "../assets/hero";
-import { characterToArray } from "./functionality";
+import {
+    characterToMatrix,
+    getFrame,
+    invertCharacterMatrix
+} from "./functionality";
 import { getActiveInputs } from "./input";
 import { PIXEL_SIZE } from "./constants";
 import { state } from "./state";
 
 const heroStatic = [
-    characterToArray(heroStatic1),
-    characterToArray(heroStatic2)
+    characterToMatrix(heroStatic1),
+    characterToMatrix(heroStatic2)
 ];
 
 const heroMovement = [
-    characterToArray(heroMovement1),
-    characterToArray(heroMovement2)
+    characterToMatrix(heroMovement1),
+    characterToMatrix(heroMovement2),
+    characterToMatrix(heroMovement3),
+    characterToMatrix(heroMovement4)
 ];
+
+const heroMovementOpposite = invertCharacterMatrix(heroMovement);
 
 const draw = () => {
     const { context, x, y, width, height } = state;
-    const { LEFT } = getActiveInputs();
-    const movementSwitch = Number(new Date().getMilliseconds() > 500);
-    const actualHero = LEFT ? heroMovement : heroStatic;
+    const { RIGHT, LEFT } = getActiveInputs();
+    const lateral = RIGHT || LEFT;
+    const actualHero = lateral
+        ? RIGHT
+            ? heroMovement
+            : heroMovementOpposite
+        : heroStatic;
 
     context.clearRect(0, 0, width, height);
     context.fillStyle = "green";
 
-    actualHero[movementSwitch].forEach((row, rowIndex) => {
+    actualHero[getFrame(lateral ? 4 : 2)].forEach((row, rowIndex) => {
         row.forEach((dot, dotIndex) => {
             if (dot) {
                 context.fillRect(

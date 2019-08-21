@@ -1,5 +1,5 @@
 export const PIXEL_SIZE = 5;
-export const SPEED = PIXEL_SIZE * 10;
+export const SPEED = PIXEL_SIZE * 30;
 
 export const KEYBOARD_INPUT = {
     DOWN: 40,
