@@ -1,4 +1,4 @@
-export let state = {
+let state = {
     activeKeys: [],
     time: 0,
     x: 150,
@@ -14,3 +14,7 @@ export const setState = newState => {
     state = { ...state, ...newState };
     return state;
 };
+
+export const getState = () => ({
+    ...state
+});

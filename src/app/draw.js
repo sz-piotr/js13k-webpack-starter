@@ -13,7 +13,7 @@ import {
 } from "./functionality";
 import { getActiveInputs } from "./input";
 import { PIXEL_SIZE } from "./constants";
-import { state } from "./state";
+import { getState } from "./state";
 
 const heroStatic = [
     characterToMatrix(heroStatic1),
@@ -30,7 +30,7 @@ const heroMovement = [
 const heroMovementOpposite = invertCharacterMatrix(heroMovement);
 
 const draw = () => {
-    const { context, x, y, width, height } = state;
+    const { context, x, y, width, height } = getState();
     const { RIGHT, LEFT } = getActiveInputs();
     const lateral = RIGHT || LEFT;
     const actualHero = lateral
