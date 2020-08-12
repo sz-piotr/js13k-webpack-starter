@@ -10,7 +10,7 @@ This project aims to be a foundation for creating a game for the [js13k](http://
 1. Code inlining (the entire application is a single `index.html` file)
 1. Development server with source maps
 1. Generation of submission files (including the `.zip` file)
-1. *ES2015* module support through webpack
+1. *ES2018* module support through webpack
 1. Tree shaking and module concatenation
 
 ## How can I get started?
@@ -56,10 +56,13 @@ All your javascript files should be located in the `src/app/` directory. The ent
 
 This project uses webpack for module bundling. This means that all the files that you want to use should be imported directly or indirectly by either `main.js` or `main.css`.
 
+The project used before `html-webpack-inline-source-plugin` on the version `0.0.10` but it has a bug. For now, [there is a workaround](https://github.com/DustinJackson/html-webpack-inline-source-plugin/issues/79#issuecomment-673489454) using the version `1.0.0-beta.2`.
+
 ## ES2015+ support
 
-This repository used to include [Babel](https://babeljs.io/) to enable working with modern JavaScript. As time progresses however the browser support for modern JS became excelent and webpack began shipping a newer version of uglify that can minify it. All of this makes it a rational choice to omit Babel as it would only increase the overall bundle size.
+This repository used to include [Babel](https://babeljs.io/) to enable working with modern JavaScript. As time progresses however the browser support for modern JS became excellent and webpack began shipping a newer version of ~uglify~ terser that can minify it. All of this makes it a rational choice to omit Babel as it would only increase the overall bundle size.
 
 ## Resources
 
 1. Webpack [https://webpack.js.org/](https://webpack.js.org/)
+2. Terser [https://github.com/terser/terser](https://github.com/terser/terser).
